@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-
 using namespace std;
+
+// Breadth First Search for an undirected graph
+// Nodes: 0, 1, 2, 3, 4, 5, 6
 
 void bfs(int start, const vector<vector<int>>& adj, vector<bool>& visited) {
     queue<int> q;
@@ -24,26 +26,31 @@ void bfs(int start, const vector<vector<int>>& adj, vector<bool>& visited) {
 }
 
 int main() {
-    int n, m;
-    cin >> n >> m;
-
+    int n = 7; // Nodes are 0-6
     vector<vector<int>> adj(n);
 
-    for (int i = 0; i < m; i++) {
-        int u, v;
-        cin >> u >> v;
-        adj[u].push_back(v);
-        adj[v].push_back(u);
-    }
+    // Example edges (edit as needed)
+    // For demonstration, let's use a simple tree:
+    //        0
+    //      / | \
+    //     1  2  3
+    //        |   \
+    //        4    5
+    //             |
+    //             6
+    adj[0] = {1, 2, 3};
+    adj[2] = {0, 4};
+    adj[3] = {0, 5};
+    adj[1] = {0};
+    adj[4] = {2};
+    adj[5] = {3, 6};
+    adj[6] = {5};
 
     vector<bool> visited(n, false);
 
-    for (int i = 0; i < n; i++) {
-        if (!visited[i]) {
-            bfs(i, adj, visited);
-        }
-    }
-
+    cout << "BFS Traversal starting from node 0: ";
+    bfs(0, adj, visited);
     cout << endl;
+
     return 0;
 }
