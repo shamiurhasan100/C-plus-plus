@@ -1,10 +1,7 @@
-#include <iostream>
-#include <vector>
-#include <queue>
+#include <bits/stdc++.h>
 using namespace std;
 
-// Breadth First Search for an undirected graph
-// Nodes: 0, 1, 2, 3, 4, 5, 6
+// Simple BFS example for an undirected graph with nodes 0..6
 
 void bfs(int start, const vector<vector<int>>& adj, vector<bool>& visited) {
     queue<int> q;
@@ -12,43 +9,41 @@ void bfs(int start, const vector<vector<int>>& adj, vector<bool>& visited) {
     q.push(start);
 
     while (!q.empty()) {
-        int node = q.front();
-        q.pop();
+        int node = q.front(); q.pop();
         cout << node << " ";
 
-        for (int neighbor : adj[node]) {
-            if (!visited[neighbor]) {
-                visited[neighbor] = true;
-                q.push(neighbor);
+        for (int nei : adj[node]) {
+            if (!visited[nei]) {
+                visited[nei] = true;
+                q.push(nei);
             }
         }
     }
 }
 
 int main() {
-    int n = 7; // Nodes are 0-6
+    const int n = 7; // nodes 0,1,2,3,4,5,6
     vector<vector<int>> adj(n);
 
-    // Example edges (edit as needed)
-    // For demonstration, let's use a simple tree:
-    //        0
-    //      / | \
-    //     1  2  3
-    //        |   \
-    //        4    5
-    //             |
-    //             6
-    adj[0] = {1, 2, 3};
-    adj[2] = {0, 4};
-    adj[3] = {0, 5};
-    adj[1] = {0};
-    adj[4] = {2};
-    adj[5] = {3, 6};
-    adj[6] = {5};
+    // Example edges (undirected)
+    auto addEdge = [&](int u, int v) {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    };
+
+    addEdge(0, 1);
+    addEdge(0, 2);
+    addEdge(1, 3);
+    addEdge(1, 4);
+    addEdge(2, 5);
+    addEdge(2, 6);
+
+    // Optional: sort adjacency lists for deterministic traversal order
+    for (int i = 0; i < n; ++i) sort(adj[i].begin(), adj[i].end());
 
     vector<bool> visited(n, false);
 
-    cout << "BFS Traversal starting from node 0: ";
+    cout << "BFS traversal starting from node 0: ";
     bfs(0, adj, visited);
     cout << endl;
 
